@@ -1,3 +1,4 @@
+stty cols 180 rows 50
 echo "Turning swap off"
 swapoff -a
 cat /proc/meminfo | grep 'SwapTotal'

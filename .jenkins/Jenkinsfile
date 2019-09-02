@@ -1,3 +1,4 @@
-//@Library("Jenkins")
+@Library("Jenkins")
 
 print "Working initial testing"
+jenkinsMain()

@@ -14,4 +14,21 @@ build_dockerfile(){
 	"$docker" build -t $name $location --build-arg secret_jenkins=$JENKINS_SECRET
 }
 
+create_agent() {
+	source ~/.secrets
+	cp ~/.secrets .secrets
+	ls -la
+	./run.sh build_dockerfile jenkins-agent ..
+	echo "Cleaning images."
+	yes | "$docker" image prune
+	old_container=$("$docker" ps -a | grep "jenkins-agent" | awk '{ print $1 }')
+	if [ ! -z $old_container ]; then
+		"$docker" stop $old_container
+		"$docker" rm  $old_container
+	fi
+	echo "Clearing out exited containers."
+	"$docker" rm $("$docker" ps -a -f status=exited -q)
+	"$docker" run -d -it -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
+	rm .secrets
+}
 "$@"

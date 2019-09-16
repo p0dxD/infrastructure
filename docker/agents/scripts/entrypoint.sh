@@ -1,6 +1,7 @@
 #!/bin/bash
 protocol="http"
-url="192.168.1.232"
+# url=$(ifconfig | awk '/inet /{print $2}' | head -n 1)
+url="192.168.39.193"
 port="8080"
 echo "Making directory"
 mkdir -p /home/jenkins/agent

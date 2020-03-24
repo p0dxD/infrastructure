@@ -28,7 +28,7 @@ create_agent() {
 	fi
 	echo "Clearing out exited containers."
 	"$docker" rm $("$docker" ps -a -f status=exited -q)
-	"$docker" run -d -it  -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
+	"$docker" run -d -it  -v /mnt/agent/jenkins/agent:/home/jenkins/agent -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
 	rm .secrets
 }
 "$@"

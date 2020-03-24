@@ -19,6 +19,8 @@ RUN cat /dev/zero | ssh-keygen -q -N ""
 RUN ls -la ~/.ssh
 RUN echo  ${remote_machine_user_secret}
 RUN sshpass -p ${tmp_remote_password_secret} ssh-copy-id -o StrictHostKeyChecking=no -i  /root/.ssh/id_rsa.pub ${remote_machine_user_secret}@${remote_machine_secret}
+
+RUN mkdir -p /home/jenkins/agent
 #Environments
 ENV GOPATH /home/go
 ENV GRADLE_HOME /opt/gradle/gradle-5.0

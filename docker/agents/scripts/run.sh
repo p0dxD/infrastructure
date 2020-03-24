@@ -11,7 +11,7 @@ remove_stopped_containers(){
 build_dockerfile(){
 	name="$1"
 	location="$2"
-	"$docker" build -t $name $location --build-arg secret_jenkins=$JENKINS_SECRET
+	"$docker" build -t $name $location --build-arg secret_jenkins=$JENKINS_SECRET --build-arg remote_machine_secret=$REMOTE_MACHINE_SECRET --build-arg remote_machine_user_secret=$REMOTE_MACHINE_USER_SECRET --build-arg tmp_remote_password_secret=$TMP_REMOTE_PASSWORD_SECRET
 }
 
 create_agent() {
@@ -28,7 +28,7 @@ create_agent() {
 	fi
 	echo "Clearing out exited containers."
 	"$docker" rm $("$docker" ps -a -f status=exited -q)
-	"$docker" run -d -it -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
+	"$docker" run -d -it  -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
 	rm .secrets
 }
 "$@"

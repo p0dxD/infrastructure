@@ -1,14 +1,7 @@
 FROM ubuntu:latest
 RUN apt-get update \
     && apt-get install -y openjdk-8-jdk && apt-get install -y curl \
-    && apt-get install -y git \
-    && curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-    && apt-get install -y nodejs \
-    && apt install -y wget \
-    && wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp \
-    && apt install -y zip \
-    && unzip -d /opt/gradle /tmp/gradle-*.zip \
-    && apt-get install -y net-tools
+    && apt-get install -y git
 
 # for docker
 RUN apt-get install -y apt-transport-https ca-certificates gnupg-agent software-properties-common \
@@ -17,11 +10,15 @@ RUN apt-get install -y apt-transport-https ca-certificates gnupg-agent software-
     && apt-get update \
     && apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# for golang
-RUN add-apt-repository ppa:longsleep/golang-backports \
-    && apt-get update && apt-get install -y golang-go \
-    && mkdir /home/go 
-
+#Remote ssh
+RUN apt-get install -y sshpass
+ARG remote_machine_secret
+ARG remote_machine_user_secret
+ARG tmp_remote_password_secret
+RUN cat /dev/zero | ssh-keygen -q -N "" 
+RUN ls -la ~/.ssh
+RUN echo  ${remote_machine_user_secret}
+RUN sshpass -p ${tmp_remote_password_secret} ssh-copy-id -o StrictHostKeyChecking=no -i  /root/.ssh/id_rsa.pub ${remote_machine_user_secret}@${remote_machine_secret}
 #Environments
 ENV GOPATH /home/go
 ENV GRADLE_HOME /opt/gradle/gradle-5.0

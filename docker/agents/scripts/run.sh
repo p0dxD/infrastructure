@@ -1,6 +1,6 @@
 #!/bin/bash
 # windows_docker_location=/mnt/c/'Program Files'/Docker/Docker/resources/bin
-docker="$DOCKER"/docker.exe
+docker=docker
 
 remove_stopped_containers(){
 	echo "Starting removal of exited containers."

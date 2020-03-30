@@ -21,14 +21,14 @@ create_agent() {
 	./run.sh build_dockerfile jenkins-agent ..
 	echo "Cleaning images."
 	yes | "$docker" image prune
-	old_container=$("$docker" ps -a | grep "jenkins-agent" | awk '{ print $1 }')
+	old_container="$(docker ps -aq --filter 'name=jenkins-agent')"
 	if [ ! -z $old_container ]; then
 		"$docker" stop $old_container
 		"$docker" rm  $old_container
 	fi
 	echo "Clearing out exited containers."
 	"$docker" rm $("$docker" ps -a -f status=exited -q)
-	"$docker" run -d -it  -v /mnt/agent/jenkins/agent:/home/jenkins/agent -v /var/run/docker.sock:/var/run/docker.sock jenkins-agent 
+	"$docker" run -d -it  -v /mnt/agent/jenkins/agent:/home/jenkins/agent -v /var/run/docker.sock:/var/run/docker.sock --name jenkins-agent jenkins-agent 
 	rm .secrets
 }
 "$@"

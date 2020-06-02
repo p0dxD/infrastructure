@@ -1,7 +1,9 @@
 source ~/.bashrc
 source ~/.secrets
 docker pull jenkins/jenkins:latest
+cp /home/p0dxd/.certs/website.jks .
 docker build -t jenkins-website .
+rm website.jks
 previous_container="$(docker ps -aq --filter 'name=jenkins-website')"
 docker stop $previous_container
 docker rm $previous_container

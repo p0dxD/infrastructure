@@ -1,3 +1,4 @@
+#!/bin/bash
 source /home/p0dxd/.secrets
 PRIVKEY_NAME="privkey3"
 P12KEY_NAME="website"
@@ -24,5 +25,5 @@ fi
 yes | mv *.base64 /home/p0dxd/$CERTS_DIR
 
 yes | keytool -importkeystore  -srckeystore "$P12KEY_NAME".p12 -destkeystore "$P12KEY_NAME".jks -srcstoretype PKCS12 -deststoretype jks -srcstorepass "$KEYSTORE_PASSWORD_SECRET" -deststorepass "$KEYSTORE_PASSWORD_SECRET" -srcalias "$KEYSTORE_ALIAS_SECRET" -destalias "$KEYSTORE_ALIAS_SECRET" -srckeypass "$KEYSTORE_PASSWORD_SECRET" -destkeypass "$KEYSTORE_PASSWORD_SECRET" && chmod +r "$P12KEY_NAME".jks
-mv "$P12KEY_NAME".jks /mnt/jenkins/var/jenkins_home/
+mv "$P12KEY_NAME".jks /home/p0dxd/$CERTS_DIR
 rm -f *.pem *.p12 *.jks

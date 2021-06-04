@@ -1,5 +1,6 @@
-source ~/.bashrc
-source ~/.secrets
+#!/bin/bash
+source /home/p0dxd/.bashrc
+source /home/p0dxd/.secrets
 docker pull jenkins/jenkins:latest
 cp /home/p0dxd/.certs/website.jks .
 docker build -t jenkins-website .

@@ -15,8 +15,8 @@ build_dockerfile(){
 }
 
 create_agent() {
-	source ~/.secrets
-	cp ~/.secrets .secrets
+	source /home/p0dxd/.secrets
+	cp /home/p0dxd/.secrets .secrets
 	ls -la
 	./run.sh build_dockerfile jenkins-agent ..
 	echo "Cleaning images."

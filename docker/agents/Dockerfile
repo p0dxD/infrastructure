@@ -16,7 +16,7 @@ ARG remote_machine_secret
 ARG remote_machine_user_secret
 ARG tmp_remote_password_secret
 RUN cat /dev/zero | ssh-keygen -q -N "" 
-RUN ls -la ~/.ssh
+RUN ls -la /home/p0dxd/.ssh
 RUN echo  ${remote_machine_user_secret}
 RUN sshpass -p ${tmp_remote_password_secret} ssh-copy-id -o StrictHostKeyChecking=no -i  /root/.ssh/id_rsa.pub ${remote_machine_user_secret}@${remote_machine_secret}
 
